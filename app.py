@@ -1,7 +1,13 @@
 from flask import Flask, request, send_file
+from flask_cors import CORS
 import pickle, numpy as np
 import RF
+
 app = Flask(__name__)
+CORS(app)
+@app.route('/', methods=['GET'])
+def hello():
+    return 'You just made a GET request'
 
 @app.route('/train', methods=['POST'])
 def train():
@@ -32,5 +38,11 @@ def predict():
         pred_result = RF.predict(pred_input)
         return pred_result
         
+@app.route('/test', methods=['POST'])
+def test():
+    if request.method == 'POST':
+        string = request.form['string']
         
+    return 'Good job!'
+
 app.run(debug=True)

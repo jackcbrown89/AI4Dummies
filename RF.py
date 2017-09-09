@@ -7,7 +7,7 @@ from sklearn import svm
 def first_phase(target, ID, bad_vals):
     df = pd.read_csv('data.csv')
     if bad_vals:  
-        df.replace(bad_vals, -1, inplace=True)
+        df.replace('?', -1, inplace=True)
 
     d = df.drop(target, axis=1)
     d = d.drop(ID, axis=1).as_matrix()
