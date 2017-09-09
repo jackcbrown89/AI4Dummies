@@ -19,9 +19,15 @@
   margin-left: 10px;
 }
 
-.button {
-  margin-left: 20px;
-  margin-right: 40px;
+.upload-button {
+  float: right;
+  right: 30px;
+}
+
+.predict-button {
+  float: left;
+  margin-left: 50px;
+  left: 30px;
 }
 
 .footer {
