@@ -13,7 +13,7 @@ const Predict = (props) => (
 
     {/* MODEL LOADER */}
     {props.step.uploading &&
-      <ReactFileReader handleFiles={props.handleUploadModelClick} fileTypes={'.csv'}>
+      <ReactFileReader handleFiles={props.handleUploadModelClick} fileTypes={'.pkl'}>
         <div className='load-container'>
           <Button content='Upload model' labelPosition='right' icon='upload' size='massive' color='red'/>
         </div>
@@ -35,7 +35,7 @@ const Predict = (props) => (
 
           <Table.Body>
             <Table.Row>
-                <Table.Cell><Input fluid type='number'/></Table.Cell>
+                <Table.Cell><Input fluid/></Table.Cell>
                 <Table.Cell><Input fluid/></Table.Cell>
                 <Table.Cell><Input fluid/></Table.Cell>
             </Table.Row>

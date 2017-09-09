@@ -10,6 +10,7 @@ import Loader from './Loader'
 import Save from './Save'
 import Predict from './Predict'
 import request from 'superagent'
+import axios from 'axios'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -90,20 +91,28 @@ class App extends Component {
   }
 
   handleUploadModelClick = files => {
-    // console.log('running!');
     var reader = new FileReader();
     var that = this;
-    reader.onload = function(e) {
+
+    let data = new FormData()
+    data.set('model', files[0])
+    axios({
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      url: 'http://719bd0f4.ngrok.io/load_model',
+      data: data
+    })
+    .then(function (response) {
+      console.log(response);
       that.setState({
-        step: {
-          uploading: false,
-          gettingInputs: true
-        }
+        rows: response.data
       })
-      // Use reader.result
-      console.log(reader.result)
-    }
-    reader.readAsText(files[0]);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   render() {
