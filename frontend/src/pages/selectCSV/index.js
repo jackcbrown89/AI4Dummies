@@ -2,14 +2,14 @@ import React from 'react';
 import './index.css';
 import { Icon, Menu, Table, Button, Radio} from 'semantic-ui-react'
 import Logo from '../../assets/AI4dummies.png'
-
+let target
 const SelectCVS = (props) => {
-  let columns = props.file.split('\n');
-  let headers = columns[0].split(',');
+  let rows = props.file.split('\n');
+  let headers = rows[0].split(',');
   console.log(headers);
-  let firstValues = columns[1].split(',');
-  let secondValues = columns[2].split(',');
-  let thirdValues = columns[3].split(',');
+  let firstValues = rows[1].split(',');
+  let secondValues = rows[2].split(',');
+  let thirdValues = rows[3].split(',');
     return (
       <div className="SelectCVS">
         <img src={Logo} alt="AI4dummiesLogo" className="SelectCVSHeader"/>
@@ -40,6 +40,9 @@ const SelectCVS = (props) => {
                 <Radio
                   className="SelectCVSRadio"
                   label='Target'
+                  onClick={() => {
+                    target = index;
+                  }}
                 />
                 </Table.HeaderCell>
               )}
@@ -110,7 +113,9 @@ const SelectCVS = (props) => {
             </Table.Row>
           </Table.Footer>
         </Table>
-        <Button className="SelectCVSButton" content='Next' icon='right arrow' labelPosition='right' />
+        <Button className="SelectCVSButton" content='Next' icon='right arrow' labelPosition='right' onClick={() => {
+          props.handleNext(rows, target)
+        }} />
       </div>
     );
 }

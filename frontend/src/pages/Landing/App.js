@@ -9,24 +9,53 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loader from './Loader'
 import Save from './Save'
 import Predict from './Predict'
+import request from 'superagent'
 
 
 class App extends Component {
   constructor(){
   super()
     this.state = {
-      file: false
+      file: false,
+      selected: false,
+      response: false
     }
     this.handleFiles = this.handleFiles.bind(this)
+    this.handleNext = this.handleNext.bind(this)
   }
-
+  handleNext = (file, target) => {
+    this.setState({
+      file: file,
+      selected: true,
+      response: false
+    })
+    let that = this;
+    request.post('http://localhost:3000/train')
+    .set('Content-Type', 'application/json')
+    .send({"file":file,"target":target})
+    .end(function (error, res) {
+        if(error){
+          that.setState({
+            file: false,
+            selected: false,
+            response: false
+          })
+        }
+        if(res){
+          that.setState({
+            file: file,
+            selected: true,
+            response: res.body
+          })
+        }
+    });
+  }
   handleFiles = files => {
     var reader = new FileReader();
     var that = this;
     reader.onload = function(e) {
     // Use reader.result
-      that.setState({file: reader.result})
-
+      that.setState({file: reader.result, selected: false, response: false})
       // Use reader.result
       console.log(reader.result)
     }
@@ -90,7 +119,8 @@ class App extends Component {
       {/* ************************************************ */}
       {/* ******************** Table Select CSV ******************** */}
       {/* ************************************************ */}
-      {this.state.file !== false && <SelectCSV file={this.state.file}/>}
+      {this.state.file !== false && this.state.selected === false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
+      {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
     </div>
     );
   }
