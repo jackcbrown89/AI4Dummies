@@ -9,6 +9,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loader from './Loader'
 import Save from './Save'
 import Predict from './Predict'
+import request from 'superagent'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -23,21 +24,50 @@ class App extends Component {
         uploading: true,
         gettingInputs: false,
         finished: false
-      }
+      },
+      selected: false,
+      response: false
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
     this.handleUploadModelClick = this.handleUploadModelClick.bind(this)
     this.handleSubmitInputsForPrediction = this.handleSubmitInputsForPrediction.bind(this)
+    this.handleFiles = this.handleFiles.bind(this)
+    this.handleNext = this.handleNext.bind(this)
   }
-
+  handleNext = (file, target) => {
+    this.setState({
+      file: file,
+      selected: true,
+      response: false
+    })
+    let that = this;
+    request.post('http://localhost:3000/train')
+    .set('Content-Type', 'application/json')
+    .send({"file":file,"target":target})
+    .end(function (error, res) {
+        if(error){
+          that.setState({
+            file: false,
+            selected: false,
+            response: false
+          })
+        }
+        if(res){
+          that.setState({
+            file: file,
+            selected: true,
+            response: res.body
+          })
+        }
+    });
+  }
   handleFiles = files => {
     var reader = new FileReader();
     var that = this;
     reader.onload = function(e) {
     // Use reader.result
-      that.setState({file: reader.result})
-
+      that.setState({file: reader.result, selected: false, response: false})
       // Use reader.result
       // console.log(reader.result)
     }
@@ -71,7 +101,7 @@ class App extends Component {
         }
       })
       // Use reader.result
-      // console.log(reader.result)
+      console.log(reader.result)
     }
     reader.readAsText(files[0]);
   }
@@ -128,10 +158,6 @@ class App extends Component {
           />}
 
         </div>
-        {/* ************************************************ */}
-        {/* ******************** Table Select CSV ******************** */}
-        {/* ************************************************ */}
-        {this.state.file !== false && <SelectCSV file={this.state.file}/>}
 
         {/* ************************************************ */}
         {/* ******************** FOOTER ******************** */}
@@ -139,6 +165,11 @@ class App extends Component {
         <div className="footer">
           Made with <span role="img" aria-label="love">❤️</span> by 4 geeks at PennApps
         </div>
+        {/* ************************************************ */}
+        {/* ******************** Table Select CSV ******************** */}
+        {/* ************************************************ */}
+        {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
+        {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
       </div>
     );
   }

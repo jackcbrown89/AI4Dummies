@@ -35,7 +35,7 @@ const Predict = (props) => (
 
           <Table.Body>
             <Table.Row>
-                <Table.Cell><Input fluid/></Table.Cell>
+                <Table.Cell><Input fluid type='number'/></Table.Cell>
                 <Table.Cell><Input fluid/></Table.Cell>
                 <Table.Cell><Input fluid/></Table.Cell>
             </Table.Row>
