@@ -119,7 +119,7 @@ class App extends Component {
       {/* ************************************************ */}
       {/* ******************** Table Select CSV ******************** */}
       {/* ************************************************ */}
-      {this.state.file !== false && this.state.selected === false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
+      {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
       {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
     </div>
     );
