@@ -1,56 +1,74 @@
 .App {
   text-align: center;
   height: 100%;
+  width: 100%;
 }
 
 .App-logo {
-  margin-top: 200px;
-  height: 175px;
+  height: 100px;
 }
 
 .App-header {
   height: 200px;
   padding: 20px;
+  padding-top: 50px;
   color: white;
 }
 
+.App p{
+  color: black;
+  float: right;
+  padding: 20px;
+}
+
 .Buttons-container {
-  margin-top: 300px;
+  margin-top: 100px;
   margin-left: 10px;
 }
 
-.upload-button {
-  float: right;
-  right: 30px;
-}
-
 .predict-button {
-  float: left;
-  margin-left: 50px;
-  left: 30px;
+  top: 30px;
 }
 
 .footer {
-  position: fixed;
-  bottom: 0px;
+  position: absolute;
   width: 100%;
-  height: 30%;
-  max-height: calc(100% - 551px);
-  /* IE10 Consumer Preview */
-  background-image: -ms-linear-gradient(top, #FFFFFF 0%, #FF001F 100%);
+  height: 30px;
+  color: black;
+  margin-top: 70px;
+  font-size: 18px;
+}
 
-  /* Mozilla Firefox */
-  background-image: -moz-linear-gradient(top, #FFFFFF 0%, #FF001F 100%);
+@media screen and (min-width:1023px) {
+  .App-logo {
+    margin-top: 200px;
+    height: 175px;
+  }
+  .Buttons-container {
+    margin-top: 300px;
+    margin-left: 10px;
+  }
+  .upload-button {
+    float: right;
+    right: 30px;
+  }
 
-  /* Opera */
-  background-image: -o-linear-gradient(top, #FFFFFF 0%, #FF001F 100%);
+  .predict-button {
+    float: left;
+    margin-left: 50px;
+    left: 30px;
+    top: 0px;
+  }
+}
 
-  /* Webkit (Safari/Chrome 10) */
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #FF001F));
-
-  /* Webkit (Chrome 11+) */
-  background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #FF001F 100%);
-
-  /* W3C Markup, IE10 Release Preview */
-  background-image: linear-gradient(to bottom, #FFFFFF 0%, #FF001F 100%);
+@media screen and (min-height:600px) {
+  .footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 30px;
+    text-align: right;
+    color: black;
+    right: 20px;
+  }
 }
