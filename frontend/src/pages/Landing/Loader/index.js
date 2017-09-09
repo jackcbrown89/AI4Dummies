@@ -1,6 +1,6 @@
 import React from 'react'
 import './loader.css'
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 
 const Loading = (props) => {
   return (
