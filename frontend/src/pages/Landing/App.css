@@ -1,0 +1,74 @@
+.App {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.App-logo {
+  height: 100px;
+}
+
+.App-header {
+  height: 200px;
+  padding: 20px;
+  padding-top: 50px;
+  color: white;
+}
+
+.App p{
+  color: black;
+  float: right;
+  padding: 20px;
+}
+
+.Buttons-container {
+  margin-top: 100px;
+  margin-left: 10px;
+}
+
+.predict-button {
+  top: 30px;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  color: black;
+  margin-top: 70px;
+  font-size: 18px;
+}
+
+@media screen and (min-width:1023px) {
+  .App-logo {
+    margin-top: 200px;
+    height: 175px;
+  }
+  .Buttons-container {
+    margin-top: 300px;
+    margin-left: 10px;
+  }
+  .upload-button {
+    float: right;
+    right: 30px;
+  }
+
+  .predict-button {
+    float: left;
+    margin-left: 50px;
+    left: 30px;
+    top: 0px;
+  }
+}
+
+@media screen and (min-height:600px) {
+  .footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 30px;
+    text-align: right;
+    color: black;
+    right: 20px;
+  }
+}

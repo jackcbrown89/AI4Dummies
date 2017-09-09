@@ -1,0 +1,19 @@
+.load-container {
+  margin-top: 50px;
+}
+.inputs-container {
+  padding: 30px;
+}
+.steps-container {
+  margin-top: 200px;
+  margin-bottom: 30px;
+}
+
+@media screen and (min-width:1023px) {
+  .load-container {
+    /*margin-top: 300px;*/
+  }
+  /*.App-logo {
+    margin-top: 100px;
+  }*/
+}
