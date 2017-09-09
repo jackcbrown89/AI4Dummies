@@ -8,6 +8,7 @@
     "react-file-reader": "^1.1.1",
     "react-flexbox-grid": "^1.1.5",
     "react-scripts": "1.0.13",
+    "react-tap-event-plugin": "^2.0.1",
     "semantic-ui-css": "^2.2.12",
     "semantic-ui-react": "^0.72.0",
     "superagent": "^3.6.0"
