@@ -1,71 +1,99 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './index.css';
-import { Icon, Label, Menu, Table, Button, Radio} from 'semantic-ui-react'
+import { Icon, Menu, Table, Button, Radio} from 'semantic-ui-react'
 import Logo from '../../assets/AI4dummies.png'
+
 const SelectCVS = (props) => {
-  let columns  = props.length;
+  let columns = props.file.split('\n');
+  let headers = columns[0].split(',');
+  console.log(headers);
+  let firstValues = columns[1].split(',');
+  let secondValues = columns[2].split(',');
+  let thirdValues = columns[3].split(',');
     return (
       <div className="SelectCVS">
-        <img src={Logo} className="SelectCVSHeader"/>
+        <img src={Logo} alt="AI4dummiesLogo" className="SelectCVSHeader"/>
         <Table celled className="SelectCVSTable">
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Header
+            {headers.map((a,index) => {console.log(a);
+            if(index<8){
+              return(
+                <Table.HeaderCell>{a}
+                </Table.HeaderCell>
+              )}
+              else{
+                return('')
+              }
+            })}
+            </Table.Row>
+            <Table.Row>
+            {headers.map((a,index) => {console.log(a);
+            if(index<8){
+              return(
+                <Table.HeaderCell>
                 <Radio
                   className="SelectCVSRadio"
                   toggle
-                  label="Important Parameter"
+                  // name={"SelectCVSRadio" + index}
                 />
                 <Radio
                   className="SelectCVSRadio"
                   label='Target'
                 />
-          </Table.HeaderCell>
-              <Table.HeaderCell>Header
-                <Radio
-                  className="SelectCVSRadio"
-                  toggle
-                  label="Important Parameter"
-                />
-                <Radio
-                  className="SelectCVSRadio"
-                  label='Target'
-                /></Table.HeaderCell>
-              <Table.HeaderCell>Header
-                <Radio
-                  className="SelectCVSRadio"
-                  toggle
-                  label="Important Parameter"
-                />
-                <Radio
-                  className="SelectCVSRadio"
-                  label='Target'
-                /></Table.HeaderCell>
+                </Table.HeaderCell>
+              )}
+              else{
+                return('')
+              }
+            })}
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
             <Table.Row>
-              <Table.Cell>
-                <Label ribbon>First</Label>
-              </Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
+              {firstValues.map((a,index) => {console.log(a);
+              if(index<8){
+                return(
+                  <Table.Cell>
+                    {a}
+                  </Table.Cell>
+              )}
+              else{
+                return('')
+              }
+            })}
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
+              {secondValues.map((a,index) => {console.log(a);
+              if(index<8){
+                return(
+                  <Table.Cell>
+                    {a}
+                  </Table.Cell>
+              )}
+              else{
+                return('')
+              }
+              })}
             </Table.Row>
             <Table.Row>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
-              <Table.Cell>Cell</Table.Cell>
+              {thirdValues.map((a,index) => {console.log(a);
+              if(index<8){
+                return(
+                  <Table.Cell>
+                    {a}
+                  </Table.Cell>
+              )}
+              else{
+                return('')
+              }
+            })}
             </Table.Row>
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan='3'>
+              <Table.HeaderCell colSpan={headers.length > 8 ? '8' : headers.length}>
                 <Menu floated='right' pagination>
                   <Menu.Item as='a' icon>
                     <Icon name='left chevron' />
