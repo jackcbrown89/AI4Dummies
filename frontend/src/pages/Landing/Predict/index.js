@@ -32,7 +32,7 @@ const Predict = (props) => {
   return (
     <div>
       {/* STEPS */}
-      <div className='steps-container'>
+      <div className='steps-container' style={(!props.state.step.uploading && props.state.step.gettingInputs) ? {marginTop: 30+'px', marginBottom: 30+'px'} : {marginTop: 250+'px', marginBottom: 30+'px'}} >
         <Steps step={props.step}/>
       </div>
 
@@ -67,7 +67,7 @@ const Predict = (props) => {
           />
         </Container>
       }
-      {props.step.gettingInputs && <Chart rows={props.rows} weights={props.weights} /> }
+      {/* {props.step.gettingInputs && <Chart rows={props.rows} weights={props.weights} /> } */}
     </div>
   )
 }

@@ -205,8 +205,11 @@ class App extends Component {
     let headerStyle = {}
     if (this.state.predicting) {
       headerStyle = {marginTop: 200+'px'}
-    } else if (this.state.predicting && this.state.step.gettingInputs){
+      // console.log('only predicting');
+    }
+    if (!this.state.step.uploading && this.state.step.gettingInputs){
       headerStyle = {marginTop: 0+'px', height: 130+'px'}
+      // console.log('predicting and gettingInputs');
     }
     return (
       <div>
