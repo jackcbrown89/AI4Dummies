@@ -7,12 +7,12 @@ import ReactFileReader from 'react-file-reader';
 const Predict = (props) => {
   var headers = []
   var cells = []
-  for (var i=0; i < props.rows; i++) {
+  for (var i=0; i < props.rows.length; i++) {
     var name = "input" + i
     headers.push(
       <Table.HeaderCell
         key={i+1}
-        style={{textAlign: 'center'}}>x{i+1}
+        style={{textAlign: 'center'}}>{props.rows[i]}
       </Table.HeaderCell>
     );
     cells.push(

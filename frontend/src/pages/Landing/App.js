@@ -14,7 +14,6 @@ const FileDownload = require('react-file-download');
 
 injectTapEventPlugin();
 
-
 class App extends Component {
   constructor(){
   super()
@@ -39,6 +38,8 @@ class App extends Component {
     this.handleFiles = this.handleFiles.bind(this)
     this.handleNext = this.handleNext.bind(this)
     this.handleInputChanges = this.handleInputChanges.bind(this)
+    this.restart = this.restart.bind(this)
+    this.tryAgain = this.tryAgain.bind(this)
   }
   handleNext = (file, target) => {
     this.setState({
@@ -50,7 +51,7 @@ class App extends Component {
     data.set('data',that.state.fileSend)
     data.set('ID','id')
     data.set('target',target)
-    console.log(that.state);
+    // console.log(that.state);
    axios({
      method: 'post',
      headers: {
@@ -61,7 +62,7 @@ class App extends Component {
    })
    .then(function (res) {
           FileDownload(res.data, 'model.txt');
-         console.log(res.data);
+        //  console.log(res.data);
          that.setState({
            file: false,
            selected: false
@@ -94,13 +95,13 @@ class App extends Component {
       }
     })
     var pred_input = []
-    for (var i = 0; i < that.state.rows; i++) {
+    for (var i = 0; i < that.state.rows.length; i++) {
       pred_input.push(that.state['input'+i])
       let data = new FormData()
       data.set('pred_input', pred_input)
       data.set('model', that.state.txt)
-      // console.log(data);
-      if (i === that.state.rows-1) {
+      if (i === that.state.rows.length-1) {
+        // console.log("hellloooooo");
         axios({
           method: 'post',
           headers: {
@@ -112,7 +113,7 @@ class App extends Component {
         .then(function (response) {
           // console.log(response);
           that.setState({
-            result: response.data[0]
+            result: response.data
           })
         })
       }
@@ -138,13 +139,13 @@ class App extends Component {
     .then(function (response) {
       // console.log(response);
       that.setState({
-        rows: parseInt(response.data),
+        rows: response.data.split(','),
         step: {
           uploading: false,
           gettingInputs: true
         }
       })
-      for (var i = 0; i < parseInt(response.data); i++) {
+      for (var i = 0; i < response.data.length; i++) {
           that.setState({
             ['input'+i]: ''
           })
@@ -158,6 +159,40 @@ class App extends Component {
 
   handleInputChanges = (e) => {
     this.setState({[e.target.name]: e.target.value});
+  }
+
+  restart = () => {
+    this.setState({
+      file: false,
+      predicting: false,
+      step: {
+        uploading: true,
+        gettingInputs: false,
+        finished: false
+      },
+      selected: false,
+      fileSend: false,
+      rows: 0,
+      txt: false,
+      result: false
+    })
+  }
+
+  tryAgain = () => {
+    this.setState({
+      file: false,
+      predicting: true,
+      step: {
+        uploading: true,
+        gettingInputs: false,
+        finished: false
+      },
+      selected: false,
+      fileSend: false,
+      rows: 0,
+      txt: false,
+      result: false
+    })
   }
 
   render() {
@@ -228,6 +263,8 @@ class App extends Component {
         <Result
           open={this.state.step.finished}
           result={this.state.result}
+          restart={this.restart}
+          tryAgain={this.tryAgain}
         />
       </div>
     );
