@@ -17,9 +17,9 @@ const SelectCVS = (props) => {
           <Table.Header>
             <Table.Row>
             {headers.map((a,index) => {console.log(a);
-            if(index<8){
+            if(index<12){
               return(
-                <Table.HeaderCell>{a}
+                <Table.HeaderCell className="SelectCVSTableRowRed">{a}
                 </Table.HeaderCell>
               )}
               else{
@@ -29,7 +29,7 @@ const SelectCVS = (props) => {
             </Table.Row>
             <Table.Row>
             {headers.map((a,index) => {console.log(a);
-            if(index<8){
+            if(index<12){
               return(
                 <Table.HeaderCell>
                 <Radio
@@ -41,7 +41,7 @@ const SelectCVS = (props) => {
                   className="SelectCVSRadio"
                   label='Target'
                   onClick={() => {
-                    target = index;
+                    target = headers[index];
                   }}
                 />
                 </Table.HeaderCell>
@@ -56,7 +56,7 @@ const SelectCVS = (props) => {
           <Table.Body>
             <Table.Row>
               {firstValues.map((a,index) => {console.log(a);
-              if(index<8){
+              if(index<12){
                 return(
                   <Table.Cell>
                     {a}
@@ -69,7 +69,7 @@ const SelectCVS = (props) => {
             </Table.Row>
             <Table.Row>
               {secondValues.map((a,index) => {console.log(a);
-              if(index<8){
+              if(index<12){
                 return(
                   <Table.Cell>
                     {a}
@@ -82,7 +82,7 @@ const SelectCVS = (props) => {
             </Table.Row>
             <Table.Row>
               {thirdValues.map((a,index) => {console.log(a);
-              if(index<8){
+              if(index<12){
                 return(
                   <Table.Cell>
                     {a}
@@ -93,10 +93,23 @@ const SelectCVS = (props) => {
               }
             })}
             </Table.Row>
+            <Table.Row>
+              {thirdValues.map((a,index) => {console.log(a);
+              if(index<12){
+                return(
+                  <Table.Cell>
+                    ...
+                  </Table.Cell>
+              )}
+              else{
+                return('')
+              }
+            })}
+            </Table.Row>
           </Table.Body>
           <Table.Footer>
             <Table.Row>
-              <Table.HeaderCell colSpan={headers.length > 8 ? '8' : headers.length}>
+              <Table.HeaderCell colSpan={headers.length > 12 ? '12' : headers.length}>
                 <Menu floated='right' pagination>
                   <Menu.Item as='a' icon>
                     <Icon name='left chevron' />
@@ -113,7 +126,7 @@ const SelectCVS = (props) => {
             </Table.Row>
           </Table.Footer>
         </Table>
-        <Button className="SelectCVSButton" content='Next' icon='right arrow' labelPosition='right' onClick={() => {
+        <Button color='red' className="SelectCVSButton" content='Next' icon='right arrow' labelPosition='right' onClick={() => {
           props.handleNext(props.file, target)
         }} />
       </div>
