@@ -8,10 +8,11 @@ import ReactFileReader from 'react-file-reader';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loader from './Loader'
 import Predict from './Predict'
+import Result from './Result'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 const FileDownload = require('react-file-download');
-injectTapEventPlugin();
 
+injectTapEventPlugin();
 
 class App extends Component {
   constructor(){
@@ -27,7 +28,9 @@ class App extends Component {
       selected: false,
       fileSend: false,
       rows: 0,
-      clicked: false
+      clicked: false,
+      txt: false,
+      result: false
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -37,6 +40,8 @@ class App extends Component {
     this.handleNext = this.handleNext.bind(this)
     this.handleInputChanges = this.handleInputChanges.bind(this)
     this.handleHeaderClick = this.handleHeaderClick.bind(this)
+    this.restart = this.restart.bind(this)
+    this.tryAgain = this.tryAgain.bind(this)
   }
   handleHeaderClick = (clicked) =>{
     this.setState({
@@ -53,7 +58,7 @@ class App extends Component {
     data.set('data',that.state.fileSend)
     data.set('ID','id')
     data.set('target',target)
-    console.log(that.state);
+    // console.log(that.state);
    axios({
      method: 'post',
      headers: {
@@ -64,7 +69,7 @@ class App extends Component {
    })
    .then(function (res) {
           FileDownload(res.data, 'model.txt');
-         console.log(res.data);
+        //  console.log(res.data);
          that.setState({
            file: false,
            selected: false
@@ -97,11 +102,13 @@ class App extends Component {
       }
     })
     var pred_input = []
-    for (var i = 0; i < that.state.rows; i++) {
+    for (var i = 0; i < that.state.rows.length; i++) {
       pred_input.push(that.state['input'+i])
       let data = new FormData()
       data.set('pred_input', pred_input)
-      if (i === that.state.rows-1) {
+      data.set('model', that.state.txt)
+      if (i === that.state.rows.length-1) {
+        // console.log("hellloooooo");
         axios({
           method: 'post',
           headers: {
@@ -113,7 +120,7 @@ class App extends Component {
         .then(function (response) {
           // console.log(response);
           that.setState({
-            prediction: response.data
+            result: response.data
           })
         })
       }
@@ -123,7 +130,9 @@ class App extends Component {
   handleUploadModelClick = files => {
     var reader = new FileReader();
     var that = this;
-
+    this.setState({
+      txt: files[0]
+    })
     let data = new FormData()
     data.set('model', files[0])
     axios({
@@ -137,13 +146,13 @@ class App extends Component {
     .then(function (response) {
       // console.log(response);
       that.setState({
-        rows: parseInt(response.data),
+        rows: response.data.split(','),
         step: {
           uploading: false,
           gettingInputs: true
         }
       })
-      for (var i = 0; i < parseInt(response.data); i++) {
+      for (var i = 0; i < response.data.length; i++) {
           that.setState({
             ['input'+i]: ''
           })
@@ -157,6 +166,40 @@ class App extends Component {
 
   handleInputChanges = (e) => {
     this.setState({[e.target.name]: e.target.value});
+  }
+
+  restart = () => {
+    this.setState({
+      file: false,
+      predicting: false,
+      step: {
+        uploading: true,
+        gettingInputs: false,
+        finished: false
+      },
+      selected: false,
+      fileSend: false,
+      rows: 0,
+      txt: false,
+      result: false
+    })
+  }
+
+  tryAgain = () => {
+    this.setState({
+      file: false,
+      predicting: true,
+      step: {
+        uploading: true,
+        gettingInputs: false,
+        finished: false
+      },
+      selected: false,
+      fileSend: false,
+      rows: 0,
+      txt: false,
+      result: false
+    })
   }
 
   render() {
@@ -192,16 +235,6 @@ class App extends Component {
           </div>
 
           {/* ************************************************ */}
-          {/* **************** MODEL TRAINED ***************** */}
-          {/* ************************************************ */}
-          {/* <Save uploading={true}/> */}
-
-          {/* ************************************************ */}
-          {/* ****************** LOADING ********************* */}
-          {/* ************************************************ */}
-          {/* <Loader uploading={this.state.uploading} /> */}
-
-          {/* ************************************************ */}
           {/* ****************** PREDICT ********************* */}
           {/* ************************************************ */}
           {this.state.predicting === true &&
@@ -225,7 +258,21 @@ class App extends Component {
         {/* ******************** Table Select CSV ******************** */}
         {/* ************************************************ */}
         {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext} clicked={this.state.clicked} handleHeaderClick={this.handleHeaderClick}/>}
+
+        {/* ************************************************ */}
+        {/* ******************** LOADER ******************** */}
+        {/* ************************************************ */}
         {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
+
+        {/* ************************************************ */}
+        {/* ******************** RESULT ******************** */}
+        {/* ************************************************ */}
+        <Result
+          open={this.state.step.finished}
+          result={this.state.result}
+          restart={this.restart}
+          tryAgain={this.tryAgain}
+        />
       </div>
     );
   }

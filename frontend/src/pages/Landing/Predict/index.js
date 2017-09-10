@@ -1,18 +1,18 @@
 import React from 'react'
 import './predict.css'
-import { Container, Button, Table, Input } from 'semantic-ui-react'
+import { Container, Button, Table, Icon, Input } from 'semantic-ui-react'
 import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
 
 const Predict = (props) => {
   var headers = []
   var cells = []
-  for (var i=0; i < props.rows; i++) {
+  for (var i=0; i < props.rows.length; i++) {
     var name = "input" + i
     headers.push(
       <Table.HeaderCell
         key={i+1}
-        style={{textAlign: 'center'}}>x{i+1}>
+        style={{textAlign: 'center'}}>{props.rows[i]}
       </Table.HeaderCell>
     );
     cells.push(
@@ -35,7 +35,7 @@ const Predict = (props) => {
 
       {/* MODEL LOADER */}
       {props.step.uploading &&
-        <ReactFileReader handleFiles={props.handleUploadModelClick} fileTypes={'.pkl'}>
+        <ReactFileReader handleFiles={props.handleUploadModelClick} fileTypes={'.txt'}>
           <div className='load-container'>
             <Button content='Upload model' labelPosition='right' icon='upload' size='massive' color='red'/>
           </div>
