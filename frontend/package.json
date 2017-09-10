@@ -4,10 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.2",
-<<<<<<< HEAD
-=======
     "axios-fileupload": "0.0.1",
->>>>>>> 914c013178da927c5f7e2cbd31abaefdfcd46cbd
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-file-download": "^0.3.4",
