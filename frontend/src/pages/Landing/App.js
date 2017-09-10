@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../../assets/AI4dummies.png';
 import './App.css';
-
+import axios from 'axios'
 import SelectCSV from '../selectCSV/'
 import { Button } from 'semantic-ui-react'
 import ReactFileReader from 'react-file-reader';
@@ -9,8 +9,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loader from './Loader'
 import Save from './Save'
 import Predict from './Predict'
-import request from 'superagent'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+const FileDownload = require('react-file-download');
 injectTapEventPlugin();
 
 
@@ -26,7 +26,7 @@ class App extends Component {
         finished: false
       },
       selected: false,
-      response: false
+      fileSend: false
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -38,36 +38,38 @@ class App extends Component {
   handleNext = (file, target) => {
     this.setState({
       file: file,
-      selected: true,
-      response: false
+      selected: true
     })
     let that = this;
-    request.post('http://localhost:3000/train')
-    .set('Content-Type', 'application/json')
-    .send({"file":file,"target":target})
-    .end(function (error, res) {
-        if(error){
-          that.setState({
-            file: false,
-            selected: false,
-            response: false
-          })
-        }
-        if(res){
-          that.setState({
-            file: file,
-            selected: true,
-            response: res.body
-          })
-        }
-    });
+    let data = new FormData()
+    data.set('data',that.state.fileSend)
+    data.set('ID','id')
+    data.set('bad_vals','?')
+    data.set('target',target)
+    console.log(that.state);
+   axios({
+     method: 'post',
+     headers: {
+       'Content-Type': 'multipart/form-data'
+     },
+     url: 'http://719bd0f4.ngrok.io/train',
+     data: data
+   })
+   .then(function (res) {
+          FileDownload(res.data, 'model.txt');
+         console.log(res.data);
+         that.setState({
+           file: false,
+           selected: false
+         })
+      })
   }
   handleFiles = files => {
     var reader = new FileReader();
     var that = this;
     reader.onload = function(e) {
-    // Use reader.result
-      that.setState({file: reader.result, selected: false, response: false})
+    // Use reader.resul
+      that.setState({file: reader.result, selected: false, fileSend: files[0]})
       // Use reader.result
       // console.log(reader.result)
     }
