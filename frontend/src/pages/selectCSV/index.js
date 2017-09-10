@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Icon, Menu, Table, Button, Radio} from 'semantic-ui-react'
-import Logo from '../../assets/AI4dummies.png'
+import Logo from '../../assets/Ml4dummies.png'
 let target
 const SelectCVS = (props) => {
   let rows = props.file.split('\n');
