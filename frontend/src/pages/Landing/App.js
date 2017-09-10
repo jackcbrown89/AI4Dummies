@@ -14,6 +14,7 @@ const FileDownload = require('react-file-download');
 
 injectTapEventPlugin();
 
+
 class App extends Component {
   constructor(){
   super()
@@ -30,7 +31,8 @@ class App extends Component {
       rows: 0,
       clicked: false,
       txt: false,
-      result: false
+      result: false,
+      activeIndex: 0
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -42,6 +44,12 @@ class App extends Component {
     this.handleHeaderClick = this.handleHeaderClick.bind(this)
     this.restart = this.restart.bind(this)
     this.tryAgain = this.tryAgain.bind(this)
+    this.onPieEnter = this.onPieEnter.bind(this)
+  }
+  onPieEnter(data, index) {
+    this.setState({
+      activeIndex: index,
+    });
   }
   handleHeaderClick = (clicked) =>{
     this.setState({
@@ -246,10 +254,13 @@ class App extends Component {
           {/* ****************** PREDICT ********************* */}
           {/* ************************************************ */}
           {this.state.predicting === true &&
-            <Predict step={this.state.step}
+            <Predict
+              activeIndex={this.state.activeIndex}
+              step={this.state.step}
               rows={this.state.rows}
               weights={this.state.weights}
               state={this.state}
+              onPieEnter={this.onPieEnter}
               handleInputChanges={this.handleInputChanges}
               handleUploadModelClick={this.handleUploadModelClick}
               handleSubmitInputsForPrediction={this.handleSubmitInputsForPrediction}
