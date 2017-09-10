@@ -26,7 +26,8 @@ class App extends Component {
       },
       selected: false,
       fileSend: false,
-      rows: 0
+      rows: 0,
+      clicked: false
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -35,6 +36,12 @@ class App extends Component {
     this.handleFiles = this.handleFiles.bind(this)
     this.handleNext = this.handleNext.bind(this)
     this.handleInputChanges = this.handleInputChanges.bind(this)
+    this.handleHeaderClick = this.handleHeaderClick.bind(this)
+  }
+  handleHeaderClick = (clicked) =>{
+    this.setState({
+      clicked: !clicked
+    })
   }
   handleNext = (file, target) => {
     this.setState({
@@ -217,7 +224,7 @@ class App extends Component {
         {/* ************************************************ */}
         {/* ******************** Table Select CSV ******************** */}
         {/* ************************************************ */}
-        {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
+        {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext} clicked={this.state.clicked} handleHeaderClick={this.handleHeaderClick}/>}
         {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
       </div>
     );

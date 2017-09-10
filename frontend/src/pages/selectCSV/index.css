@@ -21,6 +21,14 @@
   margin-top: 40px !important;
 }
 .SelectCVSTableRowRed{
-  background-color: #D31D1D !important;
+  background-color: #D93A3A  !important;
+  color: white!important;
+}
+.SelectCVSTableRowRed:hover{
+  background-color: #2185D0 !important;
+  color: white !important;
+}
+.SelectCVSTableRowBlue{
+  background-color: #2185D0 !important;
   color: white !important;
 }

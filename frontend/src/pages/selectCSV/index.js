@@ -19,7 +19,12 @@ const SelectCVS = (props) => {
             {headers.map((a,index) => {console.log(a);
             if(index<12){
               return(
-                <Table.HeaderCell className="SelectCVSTableRowRed">{a}
+                <Table.HeaderCell  className = {target === headers[index] ? "SelectCVSTableRowBlue" : "SelectCVSTableRowRed"}><div
+                  onClick={() => {
+                    console.log("click"+target);
+                    target = headers[index];
+                    props.handleHeaderClick(props.clicked);
+                }}>{a}</div>
                 </Table.HeaderCell>
               )}
               else{
@@ -34,16 +39,16 @@ const SelectCVS = (props) => {
                 <Table.HeaderCell>
                 <Radio
                   className="SelectCVSRadio"
+                  label='Param'
                   toggle
-                  // name={"SelectCVSRadio" + index}
                 />
-                <Radio
+                {/* <Radio
                   className="SelectCVSRadio"
                   label='Target'
                   onClick={() => {
                     target = headers[index];
                   }}
-                />
+                /> */}
                 </Table.HeaderCell>
               )}
               else{
