@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 import { Icon, Menu, Table, Button, Radio} from 'semantic-ui-react'
-import Logo from '../../assets/AI4dummies.png'
+import Logo from '../../assets/Ml4dummies.png'
 import ReactTooltip from 'react-tooltip'
 let target
 const SelectCVS = (props) => {
@@ -44,17 +44,11 @@ const SelectCVS = (props) => {
                 <Radio
                   className="SelectCVSRadio"
                   label=''
-                  toggle
                   defaultChecked
+                  toggle
+                  disabled = {target === a}
                   size='small'
                 />
-                {/* <Radio
-                  className="SelectCVSRadio"
-                  label='Target'
-                  onClick={() => {
-                    target = headers[index];
-                  }}
-                /> */}
                 </Table.HeaderCell>
               )}
               else{

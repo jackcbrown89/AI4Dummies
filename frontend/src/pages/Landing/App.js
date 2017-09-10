@@ -14,6 +14,7 @@ const FileDownload = require('react-file-download');
 
 injectTapEventPlugin();
 
+
 class App extends Component {
   constructor(){
   super()
@@ -30,7 +31,8 @@ class App extends Component {
       rows: 0,
       clicked: false,
       txt: false,
-      result: false
+      result: false,
+      activeIndex: 0
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -42,6 +44,12 @@ class App extends Component {
     this.handleHeaderClick = this.handleHeaderClick.bind(this)
     this.restart = this.restart.bind(this)
     this.tryAgain = this.tryAgain.bind(this)
+    this.onPieEnter = this.onPieEnter.bind(this)
+  }
+  onPieEnter(data, index) {
+    this.setState({
+      activeIndex: index,
+    });
   }
   handleHeaderClick = (clicked) =>{
     this.setState({
@@ -144,9 +152,11 @@ class App extends Component {
       data: data
     })
     .then(function (response) {
-      // console.log(response);
+      console.log(response);
       that.setState({
-        rows: response.data.split(','),
+        rows: Object.keys(response.data.f_imp),
+        weights: Object.values(response.data.f_imp),
+        averageValue: Object.values(response.data.avg),
         step: {
           uploading: false,
           gettingInputs: true
@@ -154,7 +164,7 @@ class App extends Component {
       })
       for (var i = 0; i < response.data.length; i++) {
           that.setState({
-            ['input'+i]: ''
+            ['input'+i]: "0"
           })
           // console.log(that.state);
       }
@@ -201,6 +211,15 @@ class App extends Component {
   }
 
   render() {
+    let headerStyle = {}
+    if (this.state.predicting) {
+      headerStyle = {marginTop: 200+'px'}
+      // console.log('only predicting');
+    }
+    if (!this.state.step.uploading && this.state.step.gettingInputs){
+      headerStyle = {marginTop: 0+'px', height: 130+'px'}
+      // console.log('predicting and gettingInputs');
+    }
     return (
       <div>
         <div className={this.state.file === false ? "App" : "Hidden"}>
@@ -209,7 +228,7 @@ class App extends Component {
           {/* ******************** HEADER ******************** */}
           {/* ************************************************ */}
           <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" style={this.state.predicting ? {marginTop: 10+'px'}:{}}/>
+            <img src={logo} className="App-logo" alt="logo" style={headerStyle}/>
           </div>
 
           {/* ************************************************ */}
@@ -236,9 +255,15 @@ class App extends Component {
           {/* ****************** PREDICT ********************* */}
           {/* ************************************************ */}
           {this.state.predicting === true &&
-            <Predict step={this.state.step}
+            <Predict
+              activeIndex={this.state.activeIndex}
+              step={this.state.step}
               rows={this.state.rows}
+              weights={this.state.weights}
               state={this.state}
+              onPieEnter={this.onPieEnter}
+              subjects={this.state.subjects}
+              averageValue={this.state.averageValue}
               handleInputChanges={this.handleInputChanges}
               handleUploadModelClick={this.handleUploadModelClick}
               handleSubmitInputsForPrediction={this.handleSubmitInputsForPrediction}
@@ -250,7 +275,7 @@ class App extends Component {
         {/* ******************** FOOTER ******************** */}
         {/* ************************************************ */}
         <div className="footer">
-          Made with <span role="img" aria-label="love">❤️</span> by 4 geeks at PennApps
+          Made with <span role="img" aria-label="love">❤️</span> by 4 geeks at PennApps XVI
         </div>
         {/* ************************************************ */}
         {/* ******************** Table Select CSV ******************** */}

@@ -7,7 +7,7 @@ const Result = (props) => {
     <Modal open={props.open} basic>
       <Header content='And the answer is...' />
       <Modal.Content>
-        <Statistic value={props.result} color='yellow' size='huge' style={{textAlign: 'center'}}/>
+        <Statistic value={props.result} color='green' size='huge' style={{textAlign: 'center'}}/>
         <p>Did you think it would be more complicated?</p>
         <p>It's not anymore!</p>
       </Modal.Content>

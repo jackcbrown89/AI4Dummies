@@ -3,10 +3,16 @@ import './predict.css'
 import { Container, Button, Table, Icon, Input } from 'semantic-ui-react'
 import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
+import {Chart} from '../Rechart'
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import {TwoLevelPieChart} from '../Rechart/radarChart.js'
 
 const Predict = (props) => {
   var headers = []
   var cells = []
+  var specificValue = []
+  // console.log(props.weights);
+  // console.log(props.rows);
   for (var i=0; i < props.rows.length; i++) {
     var name = "input" + i
     headers.push(
@@ -25,11 +31,12 @@ const Predict = (props) => {
         />
       </Table.Cell>
     );
+    specificValue.push(props.state['input'+i])
   }
   return (
     <div>
       {/* STEPS */}
-      <div className='steps-container'>
+      <div className='steps-container' style={(!props.state.step.uploading && props.state.step.gettingInputs) ? {marginTop: 30+'px', marginBottom: 30+'px'} : {marginTop: 250+'px', marginBottom: 30+'px'}} >
         <Steps step={props.step}/>
       </div>
 
@@ -64,6 +71,20 @@ const Predict = (props) => {
           />
         </Container>
       }
+
+      <Grid fluid>
+        <Row style={{float: 'left'}}>
+          <Col xsOffset={3} xs={12} md={4} style={{float: 'right'}}>
+            {props.step.gettingInputs && <Chart onPieEnter={props.onPieEnter} activeIndex={props.activeIndex} rows={props.rows} weights={props.weights}
+            style={{position: 'absolute', float: 'right'}}
+            />
+          }
+          </Col>
+          <Col xs={12} md={5}>
+            {props.step.gettingInputs && <TwoLevelPieChart subjects={props.rows} averageValue={props.averageValue} specificValue={specificValue} style={{paddingTop: -50+'px'}}/>}
+          </Col>
+        </Row>
+      </Grid>
     </div>
   )
 }
