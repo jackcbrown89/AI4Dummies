@@ -1,0 +1,37 @@
+.SelectCVSRadio{
+  margin-left: 20px !important;
+}
+.SelectCVS{
+  min-height: 100% !important;
+  width: 80% !important;
+  position: relative;
+  margin: auto;
+}
+.SelectCVSHeader{
+  margin: auto;
+  margin-top:50px;
+  width: 200px;
+}
+.SelectCVSTable{
+  margin: auto;
+  margin-top: 150px !important;
+  position: relative !important;
+}
+.SelectCVSButton{
+  margin-top: 40px !important;
+}
+.SelectCVSTableRowRed{
+  background-color: #D93A3A  !important;
+  color: white!important;
+  cursor: pointer!important;
+}
+.SelectCVSTableRowRed:hover{
+  background-color: #2185D0 !important;
+  color: white !important;
+  cursor: pointer!important;
+}
+.SelectCVSTableRowBlue{
+  background-color: #2185D0 !important;
+  color: white !important;
+  cursor: pointer!important;
+}
