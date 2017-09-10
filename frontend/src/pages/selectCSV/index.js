@@ -2,6 +2,7 @@ import React from 'react';
 import './index.css';
 import { Icon, Menu, Table, Button, Radio} from 'semantic-ui-react'
 import Logo from '../../assets/Ml4dummies.png'
+import ReactTooltip from 'react-tooltip'
 let target
 const SelectCVS = (props) => {
   let rows = props.file.split('\n');
@@ -19,12 +20,15 @@ const SelectCVS = (props) => {
             {headers.map((a,index) => {console.log(a);
             if(index<12){
               return(
-                <Table.HeaderCell  className = {target === headers[index] ? "SelectCVSTableRowBlue" : "SelectCVSTableRowRed"}><div
+                <Table.HeaderCell
+                  data-tip={"Click here to predict "+headers[index]}
+                  className = {target === headers[index] ? "SelectCVSTableRowBlue" : "SelectCVSTableRowRed"}><div
                   onClick={() => {
                     console.log("click"+target);
                     target = headers[index];
                     props.handleHeaderClick(props.clicked);
                 }}>{a}</div>
+                <ReactTooltip />
                 </Table.HeaderCell>
               )}
               else{
@@ -39,16 +43,13 @@ const SelectCVS = (props) => {
                 <Table.HeaderCell>
                 <Radio
                   className="SelectCVSRadio"
-                  label='Param'
+                  label=''
+                  defaultChecked
+                  checked = {target !== a}
                   toggle
+                  disabled = {target === a}
+                  size='small'
                 />
-                {/* <Radio
-                  className="SelectCVSRadio"
-                  label='Target'
-                  onClick={() => {
-                    target = headers[index];
-                  }}
-                /> */}
                 </Table.HeaderCell>
               )}
               else{

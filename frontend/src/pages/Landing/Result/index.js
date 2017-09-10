@@ -15,12 +15,12 @@ const Result = (props) => {
         <Button basic color='red' inverted size='big'
           onTouchTap={props.restart}
         >
-          <Icon name='bug' /> Go back
+          <Icon name='reply' /> Start over
         </Button>
         <Button color='green' inverted size='big'
           onTouchTap={props.tryAgain}
         >
-          <Icon name='wizard' /> Try another!
+          <Icon name='repeat' /> New prediction!
         </Button>
       </Modal.Actions>
     </Modal>
