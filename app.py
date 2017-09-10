@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 import pickle, numpy as np
 import RF
@@ -11,12 +11,17 @@ def hello():
 
 @app.route('/train', methods=['POST'])
 def train():
+    global target
+    global to_drop
+    global feature_importance
+    
     if request.method == 'POST':
         f = request.files['data']
         f.save('data.csv')
         target = request.form['target'].strip()
         ID = request.form['ID'].strip()
-        score = RF.first_phase(target, ID)
+        to_drop = [target, ID]
+        feature_importance, score = RF.first_phase(target, ID, to_drop)
         model = send_file('rf_model.pkl')
         return model
 
@@ -25,9 +30,9 @@ def load_model():
     if request.method == 'POST':
         f = request.files['model']
         f.save('rf_model.pkl')
-        pred_in_cols = RF.prepred_model()
-        return str(pred_in_cols)
-    
+        feature_dict = RF.prepred_model(target, to_drop, feature_importance)
+        return feature_dict
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
