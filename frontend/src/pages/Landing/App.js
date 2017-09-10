@@ -8,8 +8,10 @@ import ReactFileReader from 'react-file-reader';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import Loader from './Loader'
 import Predict from './Predict'
+import Result from './Result'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 const FileDownload = require('react-file-download');
+
 injectTapEventPlugin();
 
 
@@ -26,7 +28,9 @@ class App extends Component {
       },
       selected: false,
       fileSend: false,
-      rows: 0
+      rows: 0,
+      txt: false,
+      result: false
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -95,6 +99,8 @@ class App extends Component {
       pred_input.push(that.state['input'+i])
       let data = new FormData()
       data.set('pred_input', pred_input)
+      data.set('model', that.state.txt)
+      // console.log(data);
       if (i === that.state.rows-1) {
         axios({
           method: 'post',
@@ -107,7 +113,7 @@ class App extends Component {
         .then(function (response) {
           // console.log(response);
           that.setState({
-            prediction: response.data
+            result: response.data[0]
           })
         })
       }
@@ -117,7 +123,9 @@ class App extends Component {
   handleUploadModelClick = files => {
     var reader = new FileReader();
     var that = this;
-
+    this.setState({
+      txt: files[0]
+    })
     let data = new FormData()
     data.set('model', files[0])
     axios({
@@ -186,16 +194,6 @@ class App extends Component {
           </div>
 
           {/* ************************************************ */}
-          {/* **************** MODEL TRAINED ***************** */}
-          {/* ************************************************ */}
-          {/* <Save uploading={true}/> */}
-
-          {/* ************************************************ */}
-          {/* ****************** LOADING ********************* */}
-          {/* ************************************************ */}
-          {/* <Loader uploading={this.state.uploading} /> */}
-
-          {/* ************************************************ */}
           {/* ****************** PREDICT ********************* */}
           {/* ************************************************ */}
           {this.state.predicting === true &&
@@ -219,7 +217,19 @@ class App extends Component {
         {/* ******************** Table Select CSV ******************** */}
         {/* ************************************************ */}
         {this.state.file !== false && <SelectCSV file={this.state.file} handleNext={this.handleNext}/>}
+
+        {/* ************************************************ */}
+        {/* ******************** LOADER ******************** */}
+        {/* ************************************************ */}
         {this.state.file !== false && this.state.selected === true && <Loader uploading={true}/>}
+
+        {/* ************************************************ */}
+        {/* ******************** RESULT ******************** */}
+        {/* ************************************************ */}
+        <Result
+          open={this.state.step.finished}
+          result={this.state.result}
+        />
       </div>
     );
   }
