@@ -27,7 +27,8 @@ class App extends Component {
         finished: false
       },
       selected: false,
-      response: false
+      response: false,
+      rows: 0
     }
     this.handleFiles = this.handleFiles.bind(this)
     this.handlePredictClick = this.handlePredictClick.bind(this)
@@ -35,6 +36,7 @@ class App extends Component {
     this.handleSubmitInputsForPrediction = this.handleSubmitInputsForPrediction.bind(this)
     this.handleFiles = this.handleFiles.bind(this)
     this.handleNext = this.handleNext.bind(this)
+    this.handleInputChanges = this.handleInputChanges.bind(this)
   }
   handleNext = (file, target) => {
     this.setState({
@@ -88,6 +90,28 @@ class App extends Component {
         finished: true
       }
     })
+    var pred_input = []
+    for (var i = 0; i < that.state.rows; i++) {
+      pred_input.push(that.state['input'+i])
+      let data = new FormData()
+      data.set('pred_input', pred_input)
+      if (i == that.state.rows-1) {
+        axios({
+          method: 'post',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          url: 'http://719bd0f4.ngrok.io/predict',
+          data: data
+        })
+        .then(function (response) {
+          // console.log(response);
+          that.setState({
+            prediction: response.data
+          })
+        })
+      }
+    }
   }
 
   handleUploadModelClick = files => {
@@ -105,14 +129,28 @@ class App extends Component {
       data: data
     })
     .then(function (response) {
-      console.log(response);
+      // console.log(response);
       that.setState({
-        rows: response.data
+        rows: parseInt(response.data),
+        step: {
+          uploading: false,
+          gettingInputs: true
+        }
       })
+      for (var i = 0; i < parseInt(response.data); i++) {
+          that.setState({
+            ['input'+i]: ''
+          })
+          // console.log(that.state);
+      }
     })
     .catch(function (error) {
       console.log(error);
     });
+  }
+
+  handleInputChanges = (e) => {
+    this.setState({[e.target.name]: e.target.value});
   }
 
   render() {
@@ -162,6 +200,9 @@ class App extends Component {
           {/* ************************************************ */}
           {this.state.predicting === true &&
             <Predict step={this.state.step}
+              rows={this.state.rows}
+              state={this.state}
+              handleInputChanges={this.handleInputChanges}
               handleUploadModelClick={this.handleUploadModelClick}
               handleSubmitInputsForPrediction={this.handleSubmitInputsForPrediction}
           />}
