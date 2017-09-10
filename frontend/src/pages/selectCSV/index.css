@@ -23,12 +23,15 @@
 .SelectCVSTableRowRed{
   background-color: #D93A3A  !important;
   color: white!important;
+  cursor: pointer!important;
 }
 .SelectCVSTableRowRed:hover{
   background-color: #2185D0 !important;
   color: white !important;
+  cursor: pointer!important;
 }
 .SelectCVSTableRowBlue{
   background-color: #2185D0 !important;
   color: white !important;
+  cursor: pointer!important;
 }

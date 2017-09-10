@@ -190,14 +190,12 @@ class App extends Component {
       file: false,
       predicting: true,
       step: {
-        uploading: true,
-        gettingInputs: false,
+        uploading: false,
+        gettingInputs: true,
         finished: false
       },
       selected: false,
       fileSend: false,
-      rows: 0,
-      txt: false,
       result: false
     })
   }
