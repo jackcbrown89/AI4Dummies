@@ -3,10 +3,13 @@ import './predict.css'
 import { Container, Button, Table, Icon, Input } from 'semantic-ui-react'
 import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
+import Chart from '../Rechart'
 
 const Predict = (props) => {
   var headers = []
   var cells = []
+  // console.log(props.weights);
+  // console.log(props.rows);
   for (var i=0; i < props.rows.length; i++) {
     var name = "input" + i
     headers.push(
@@ -64,6 +67,7 @@ const Predict = (props) => {
           />
         </Container>
       }
+      {props.step.gettingInputs && <Chart rows={props.rows} weights={props.weights} /> }
     </div>
   )
 }

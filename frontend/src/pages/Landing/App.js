@@ -146,7 +146,8 @@ class App extends Component {
     .then(function (response) {
       // console.log(response);
       that.setState({
-        rows: response.data.split(','),
+        rows: Object.keys(response.data),
+        weights: Object.values(response.data),
         step: {
           uploading: false,
           gettingInputs: true
@@ -201,6 +202,12 @@ class App extends Component {
   }
 
   render() {
+    let headerStyle = {}
+    if (this.state.predicting) {
+      headerStyle = {marginTop: 200+'px'}
+    } else if (this.state.predicting && this.state.step.gettingInputs){
+      headerStyle = {marginTop: 0+'px', height: 130+'px'}
+    }
     return (
       <div>
         <div className={this.state.file === false ? "App" : "Hidden"}>
@@ -209,7 +216,7 @@ class App extends Component {
           {/* ******************** HEADER ******************** */}
           {/* ************************************************ */}
           <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" style={this.state.predicting ? {marginTop: 10+'px'}:{}}/>
+            <img src={logo} className="App-logo" alt="logo" style={headerStyle}/>
           </div>
 
           {/* ************************************************ */}
@@ -238,6 +245,7 @@ class App extends Component {
           {this.state.predicting === true &&
             <Predict step={this.state.step}
               rows={this.state.rows}
+              weights={this.state.weights}
               state={this.state}
               handleInputChanges={this.handleInputChanges}
               handleUploadModelClick={this.handleUploadModelClick}
