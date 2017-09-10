@@ -14,10 +14,9 @@ def train():
     if request.method == 'POST':
         f = request.files['data']
         f.save('data.csv')
-        target = request.form['target']
-        ID = request.form['ID']
-        bad_vals = request.form['bad_vals']
-        score = RF.first_phase(target, ID, bad_vals)
+        target = request.form['target'].strip()
+        ID = request.form['ID'].strip()
+        score = RF.first_phase(target, ID)
         model = send_file('rf_model.pkl')
         return model
 
@@ -26,8 +25,8 @@ def load_model():
     if request.method == 'POST':
         f = request.files['model']
         f.save('rf_model.pkl')
-        pred_in_size = RF.prepred_model()
-        return str(pred_in_size)
+        pred_in_cols = RF.prepred_model()
+        return str(pred_in_cols)
     
 @app.route('/predict', methods=['POST'])
 def predict():
