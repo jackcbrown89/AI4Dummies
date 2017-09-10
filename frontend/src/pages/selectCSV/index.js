@@ -127,7 +127,7 @@ const SelectCVS = (props) => {
           </Table.Footer>
         </Table>
         <Button color='red' className="SelectCVSButton" content='Next' icon='right arrow' labelPosition='right' onClick={() => {
-          props.handleNext(props.file, target)
+          props.handleNext(props.file, target.split('\n')[0])
         }} />
       </div>
     );

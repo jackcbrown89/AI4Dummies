@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../../assets/AI4dummies.png';
+import logo from '../../assets/Ml4dummies.png';
 import './App.css';
 import axios from 'axios'
 import SelectCSV from '../selectCSV/'
@@ -45,7 +45,6 @@ class App extends Component {
     let data = new FormData()
     data.set('data',that.state.fileSend)
     data.set('ID','id')
-    data.set('bad_vals','?')
     data.set('target',target)
     console.log(that.state);
    axios({
