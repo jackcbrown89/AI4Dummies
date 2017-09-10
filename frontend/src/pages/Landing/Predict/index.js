@@ -3,7 +3,7 @@ import './predict.css'
 import { Container, Button, Table, Icon, Input } from 'semantic-ui-react'
 import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
-import Chart from '../Rechart'
+import {Chart} from '../Rechart'
 
 const Predict = (props) => {
   var headers = []
@@ -67,7 +67,7 @@ const Predict = (props) => {
           />
         </Container>
       }
-      {props.step.gettingInputs && <Chart rows={props.rows} weights={props.weights} /> }
+      {props.step.gettingInputs && <Chart onPieEnter={props.onPieEnter} activeIndex={props.activeIndex} rows={props.rows} weights={props.weights} /> }
     </div>
   )
 }
