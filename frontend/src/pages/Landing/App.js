@@ -152,10 +152,10 @@ class App extends Component {
       data: data
     })
     .then(function (response) {
-      // console.log(response);
+      console.log(response);
       that.setState({
-        rows: Object.keys(response.data),
-        weights: Object.values(response.data),
+        rows: Object.keys(response.data.f_imp),
+        weights: Object.values(response.data.f_imp),
         step: {
           uploading: false,
           gettingInputs: true
@@ -272,7 +272,7 @@ class App extends Component {
         {/* ******************** FOOTER ******************** */}
         {/* ************************************************ */}
         <div className="footer">
-          Made with <span role="img" aria-label="love">❤️</span> by 4 geeks at PennApps
+          Made with <span role="img" aria-label="love">❤️</span> by 4 geeks at PennApps XVI
         </div>
         {/* ************************************************ */}
         {/* ******************** Table Select CSV ******************** */}

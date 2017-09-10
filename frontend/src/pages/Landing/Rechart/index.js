@@ -34,7 +34,7 @@ const renderActiveShape = (props) => {
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
         outerRadius={outerRadius + 10}
-        fill={fill}
+        fill='#8A73FF'
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none"/>
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none"/>
@@ -58,9 +58,9 @@ export const Chart = (props) => {
         data={data}
         cx={300}
         cy={200}
-        innerRadius={60}
-        outerRadius={80}
-        fill="#8884d8"/>
+        innerRadius={90}
+        outerRadius={120}
+        fill="#3AC0FF"/>
      </PieChart>
   );
 }
