@@ -45,7 +45,6 @@ const SelectCVS = (props) => {
                   className="SelectCVSRadio"
                   label=''
                   defaultChecked
-                  checked = {target !== a}
                   toggle
                   disabled = {target === a}
                   size='small'
