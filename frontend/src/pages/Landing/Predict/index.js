@@ -4,10 +4,12 @@ import { Container, Button, Table, Icon, Input } from 'semantic-ui-react'
 import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
 import {Chart} from '../Rechart'
+import {TwoLevelPieChart} from '../Rechart/radarChart.js'
 
 const Predict = (props) => {
   var headers = []
   var cells = []
+  var specificValue = []
   // console.log(props.weights);
   // console.log(props.rows);
   for (var i=0; i < props.rows.length; i++) {
@@ -28,6 +30,7 @@ const Predict = (props) => {
         />
       </Table.Cell>
     );
+    specificValue.push(props.state['input'+i])
   }
   return (
     <div>
@@ -68,7 +71,7 @@ const Predict = (props) => {
         </Container>
       }
       {props.step.gettingInputs && <Chart onPieEnter={props.onPieEnter} activeIndex={props.activeIndex} rows={props.rows} weights={props.weights} /> }
-
+      {props.step.gettingInputs && <TwoLevelPieChart subjects={props.rows} averageValue={props.averageValue} specificValue={specificValue} />}
     </div>
   )
 }
