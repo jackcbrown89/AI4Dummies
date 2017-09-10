@@ -5,10 +5,12 @@ import Steps from './Steps'
 import ReactFileReader from 'react-file-reader';
 import {Chart} from '../Rechart'
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import {TwoLevelPieChart} from '../Rechart/radarChart.js'
 
 const Predict = (props) => {
   var headers = []
   var cells = []
+  var specificValue = []
   // console.log(props.weights);
   // console.log(props.rows);
   for (var i=0; i < props.rows.length; i++) {
@@ -29,6 +31,7 @@ const Predict = (props) => {
         />
       </Table.Cell>
     );
+    specificValue.push(props.state['input'+i])
   }
   return (
     <div>
@@ -68,6 +71,7 @@ const Predict = (props) => {
           />
         </Container>
       }
+
       <Grid fluid>
         <Row>
           <Col xs={12} md={5}>
@@ -76,11 +80,10 @@ const Predict = (props) => {
           }
           </Col>
           <Col xs={12} md={7}>
-
+            {props.step.gettingInputs && <TwoLevelPieChart subjects={props.rows} averageValue={props.averageValue} specificValue={specificValue} />}
           </Col>
         </Row>
       </Grid>
-
     </div>
   )
 }

@@ -156,6 +156,7 @@ class App extends Component {
       that.setState({
         rows: Object.keys(response.data.f_imp),
         weights: Object.values(response.data.f_imp),
+        averageValue: Object.values(response.data.avg),
         step: {
           uploading: false,
           gettingInputs: true
@@ -163,7 +164,7 @@ class App extends Component {
       })
       for (var i = 0; i < response.data.length; i++) {
           that.setState({
-            ['input'+i]: ''
+            ['input'+i]: "0"
           })
           // console.log(that.state);
       }
@@ -261,6 +262,8 @@ class App extends Component {
               weights={this.state.weights}
               state={this.state}
               onPieEnter={this.onPieEnter}
+              subjects={this.state.subjects}
+              averageValue={this.state.averageValue}
               handleInputChanges={this.handleInputChanges}
               handleUploadModelClick={this.handleUploadModelClick}
               handleSubmitInputsForPrediction={this.handleSubmitInputsForPrediction}
