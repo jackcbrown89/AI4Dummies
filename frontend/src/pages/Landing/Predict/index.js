@@ -73,14 +73,15 @@ const Predict = (props) => {
       }
 
       <Grid fluid>
-        <Row>
-          <Col xs={12} md={5}>
+        <Row style={{float: 'left'}}>
+          <Col xsOffset={3} xs={12} md={4} style={{float: 'right'}}>
             {props.step.gettingInputs && <Chart onPieEnter={props.onPieEnter} activeIndex={props.activeIndex} rows={props.rows} weights={props.weights}
+            style={{position: 'absolute', float: 'right'}}
             />
           }
           </Col>
-          <Col xs={12} md={7}>
-            {props.step.gettingInputs && <TwoLevelPieChart subjects={props.rows} averageValue={props.averageValue} specificValue={specificValue} />}
+          <Col xs={12} md={5}>
+            {props.step.gettingInputs && <TwoLevelPieChart subjects={props.rows} averageValue={props.averageValue} specificValue={specificValue} style={{paddingTop: -50+'px'}}/>}
           </Col>
         </Row>
       </Grid>

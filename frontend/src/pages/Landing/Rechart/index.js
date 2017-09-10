@@ -50,17 +50,19 @@ export const Chart = (props) => {
   ))
 
   return (
-    <PieChart width={800} height={400}>
+    <PieChart width={800} height={400} style={{position: 'absolute', float: 'right'}}>
       <Pie
         activeIndex={props.activeIndex}
         activeShape={renderActiveShape}
         onMouseEnter={props.onPieEnter}
         data={data}
-        cx={300}
-        cy={200}
-        innerRadius={90}
-        outerRadius={120}
-        fill="#3AC0FF"/>
+        cx={500}
+        cy={180}
+        innerRadius={120}
+        outerRadius={150}
+        fill="#3AC0FF"
+        style={{position: 'absolute', right: '300px'}}
+      />
      </PieChart>
   );
 }
